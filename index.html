@@ -1,0 +1,67 @@
+<html>
+
+<head>
+  <h1>RayTracer.js - Example 1
+    <br>Simple Scene [640x480]</h1>
+
+  <input id="startButtonId" type="button" value="Start Rendering" />
+
+  <br>
+  <br>
+
+  <canvas id="resultCanvas" width="640" height="480"></canvas>
+
+  <br>
+  <br>
+
+  <div id="resultDiv"></div>
+</head>
+
+<body>
+  <script>
+    const memory = new WebAssembly.Memory({ initial: 50 });
+    const abort = (msg, file, line, column) => {
+      // msg and file are offsets of the respective strings in memory
+      // line and column are integers
+      throw Error("assertion failed"); // usually
+    }
+
+    // Fetch and instantiate the module
+    WebAssembly.instantiateStreaming(fetch("/build/untouched.wasm"), {
+      env: { memory, abort },
+      JSMath: Math,
+      console: {
+        debug(value) {
+          console.log(value);
+        }
+      }
+    })
+      .then(module => {
+        const exports = module.instance.exports;
+
+        // Fill input at [0, s-1] with random live cells
+        const mem = new Uint8Array(memory.buffer);
+
+        // get canvas
+        const canvas = document.getElementById("resultCanvas");
+        const ctx = canvas.getContext('2d');
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
+        //        document.getElementById("startButtonId").onclick = function () {
+        const startTime = new Date();
+
+        exports.init(canvasWidth, canvasHeight)
+          ;
+        const imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+        imageData.data.set(mem); é
+        ctx.putImageData(imageData, 0, 0);
+
+        const totalDuration = (new Date() - startTime) / 1000;
+        document.getElementById("resultDiv").innerHTML = "Render completed! " + totalDuration + " seconds!";
+        //      };
+      })
+  </script>
+</body>
+
+</html>
