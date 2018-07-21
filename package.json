@@ -4,8 +4,8 @@
   "description": "A RayTracer built using AssemblyScript",
   "main": "index.js",
   "scripts": {
-    "asbuild:untouched": "asc assembly/index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --validate --importMemory  --use Math=JSMath",
-    "asbuild:optimized": "asc assembly/index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate --optimize --noDebug --importMemory --use Math=JSMath",
+    "asbuild:untouched": "asc assembly/index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --validate --importMemory --memoryBase 400000 --use Math=JSMath",
+    "asbuild:optimized": "asc assembly/index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate --optimize --noDebug --importMemory --memoryBase 400000 --use Math=JSMath",
     "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized",
     "server": "http-server . -o -c-1"
   },
