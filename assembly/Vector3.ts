@@ -1,5 +1,9 @@
+declare namespace console {
+  function debug(val: number): void;
+}
 export class Vector3 {
-  constructor(public x: f64 = 0, public y: f64 = 0, public z: f64 = 0) {}
+  constructor(public x: f64 = 0, public y: f64 = 0, public z: f64 = 0) {
+  }
 
   product(v2: Vector3): Vector3 {
     this.x *= v2.x;
@@ -24,7 +28,7 @@ export class Vector3 {
   }
 
   length(): f64 {
-    return Math.sqrt(this.length2());
+    return sqrt(this.length2());
   }
 
   normalize(): Vector3 {

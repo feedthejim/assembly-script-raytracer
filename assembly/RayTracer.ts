@@ -69,6 +69,8 @@ export class RayTracer {
       ) {
         let transmission: Vector3 = new Vector3(1, 1, 1);
 
+        let tmp3 = elements[i].center.clone();
+
         let lightDirection = elements[i].center
           .clone()
           .subtract(intersectionPoint)
@@ -87,6 +89,7 @@ export class RayTracer {
               transmission.x = 0;
               transmission.y = 0;
               transmission.z = 0;
+              free_memory(changetype<usize>(hitInfo));
               break;
             }
             free_memory(changetype<usize>(tmp));
@@ -95,18 +98,21 @@ export class RayTracer {
         }
 
         let lightRatio = max(0, intersectionNormal.dotProduct(lightDirection));
+        let tmp = sphere.surfaceColor.clone();
+        let tmp2 = elements[i].emissionColor.clone();
+
         surfaceColor.add(
-          sphere.surfaceColor
-            .clone() // todo cleanup
-            .product(transmission)
-            .product(elements[i].emissionColor.clone().multiply(lightRatio)),
+          tmp.product(transmission).product(tmp2.multiply(lightRatio)),
         );
+
         free_memory(changetype<usize>(lightDirection));
         free_memory(changetype<usize>(transmission));
+        free_memory(changetype<usize>(tmp));
+        free_memory(changetype<usize>(tmp2));
       }
     }
 
-    surfaceColor.add((sphere as Sphere).emissionColor);
+    surfaceColor.add(sphere.emissionColor);
     free_memory(changetype<usize>(intersectionNormal));
     return surfaceColor;
   }

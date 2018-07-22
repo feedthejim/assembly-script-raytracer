@@ -8,7 +8,7 @@ declare namespace console {
 
 let elements: Sphere[] = [];
 
-export function init(width: i32 = 300, height: i32 = 300): void {
+export function init(width: i32 = 640, height: i32 = 480): void {
   RayTracer.renderBufferWidth = width;
   RayTracer.renderBufferHeight = height;
   RayTracer.renderBufferLength = width * height * sizeof<i32>();
@@ -34,58 +34,57 @@ export function init(width: i32 = 300, height: i32 = 300): void {
       new Vector3(),
     ),
   );
-  // elements.push(
-  //   new Sphere(
-  //     new Vector3(5, -1, -15),
-  //     2,
-  //     new Vector3(0.9, 0.76, 0.46),
-  //     1,
-  //     0,
-  //     new Vector3(),
-  //   ),
-  // );
-  // elements.push(
-  //   new Sphere(
-  //     new Vector3(5, 0, -25),
-  //     3,
-  //     new Vector3(0.65, 0.77, 0.97),
-  //     1,
-  //     0,
-  //     new Vector3(),
-  //   ),
-  // );
-  // elements.push(
-  //   new Sphere(
-  //     new Vector3(-5.5, 0, -15),
-  //     3,
-  //     new Vector3(0.9, 0.9, 0.9),
-  //     1,
-  //     0,
-  //     new Vector3(),
-  //   ),
-  // );
+  elements.push(
+    new Sphere(
+      new Vector3(5, -1, -15),
+      2,
+      new Vector3(0.9, 0.76, 0.46),
+      1,
+      0,
+      new Vector3(),
+    ),
+  );
+  elements.push(
+    new Sphere(
+      new Vector3(5, 0, -25),
+      3,
+      new Vector3(0.65, 0.77, 0.97),
+      1,
+      0,
+      new Vector3(),
+    ),
+  );
+  elements.push(
+    new Sphere(
+      new Vector3(-5.5, 0, -15),
+      3,
+      new Vector3(0.9, 0.9, 0.9),
+      1,
+      0,
+      new Vector3(),
+    ),
+  );
 
-  // // push light
-  // elements.push(
-  //   new Sphere(
-  //     new Vector3(0, 20, -30),
-  //     3,
-  //     new Vector3(),
-  //     0,
-  //     0,
-  //     new Vector3(1.2, 1.2, 1.2),
-  //   ),
-  // );
-  // elements.push(
-  //   new Sphere(
-  //     new Vector3(0, 10, 10),
-  //     3,
-  //     new Vector3(),
-  //     0,
-  //     0,
-  //     new Vector3(1, 1, 1),
-  //   ),
-  // );
+  elements.push(
+    new Sphere(
+      new Vector3(0, 20, -30),
+      3,
+      new Vector3(),
+      0,
+      0,
+      new Vector3(1.2, 1.2, 1.2),
+    ),
+  );
+  elements.push(
+    new Sphere(
+      new Vector3(0, 10, 10),
+      3,
+      new Vector3(),
+      0,
+      0,
+      new Vector3(1, 1, 1),
+    ),
+  );
   let backgroundColor: Vector3 = new Vector3(2.0, 2.0, 2.0);
 
   RayTracer.render(640, 480, elements, backgroundColor);
