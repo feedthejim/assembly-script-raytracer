@@ -127,8 +127,8 @@ export class RayTracer {
     let invHeight: f64 = 1 / height;
 
     let fov: i32 = 30;
-    let aspectRatio: f64 = width / height;
-
+    let aspectRatio: f64 = <f64>width / <f64>height;
+    console.debug(aspectRatio);
     let angle: f64 = Math.tan((Math.PI * 0.5 * fov) / 180);
     let rayOrigin: Vector3 = new Vector3();
 
