@@ -19,7 +19,7 @@
 
 <body>
   <script>
-    const memory = new WebAssembly.Memory({ initial: 62 });
+    const memory = new WebAssembly.Memory({ initial: 300, max: 10000 });
     const abort = (msg, file, line, column) => {
       // msg and file are offsets of the respective strings in memory
       // line and column are integers
@@ -40,7 +40,7 @@
         const exports = module.instance.exports;
 
         // Fill input at [0, s-1] with random live cells
-        const mem = new Uint32Array(memory.buffer);
+        const mem = new Uint8ClampedArray(memory.buffer, 0, 640 * 480 * 4);
 
         // get canvas
         const canvas = document.getElementById("resultCanvas");
@@ -50,14 +50,17 @@
         //        document.getElementById("startButtonId").onclick = function () {
         const startTime = new Date();
 
-        exports.init(canvasWidth, canvasHeight)
-        exports.addSphere()
-        console.log(exports.test())
-        console.log(mem[0])
-        // const imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
-        // imageData.data.set(mem);
-        // ctx.putImageData(imageData, 0, 0);
-
+        try {
+          exports.init(640, 480)
+        } catch (e) {
+          console.error(e)
+        }
+        const imageData = ctx.getImageData(0, 0, 640, 480);
+        imageData.data.set(mem);
+        console.log(mem[0], mem[1], mem[2], mem[3], )
+        console.log(mem[4], mem[5], mem[6], mem[7], )
+        console.log(mem[8], mem[9], mem[10], mem[11], )
+        ctx.putImageData(imageData, 0, 0);
         const totalDuration = (new Date() - startTime) / 1000;
         document.getElementById("resultDiv").innerHTML = "Render completed! " + totalDuration + " seconds!";
         //      };
