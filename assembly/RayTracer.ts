@@ -154,9 +154,9 @@ export class RayTracer {
         pixelColor.z = min(1, pixelColor.z);
 
         // convert pixel to bytes
-        let r = <u8>Math.round(pixelColor.x * 255);
-        let g = <u8>Math.round(pixelColor.y * 255);
-        let b = <u8>Math.round(pixelColor.z * 255);
+        let r = <u8>nearest(pixelColor.x * 255);
+        let g = <u8>nearest(pixelColor.y * 255);
+        let b = <u8>nearest(pixelColor.z * 255);
         setPixel(x, y, r, g, b);
         free_memory(changetype<usize>(rayDir));
       }

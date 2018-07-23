@@ -27,7 +27,7 @@
     }
 
     // Fetch and instantiate the module
-    WebAssembly.instantiateStreaming(fetch("/build/untouched.wasm"), {
+    WebAssembly.instantiateStreaming(fetch("/build/optimized.wasm"), {
       env: { memory, abort },
       JSMath: Math,
       console: {
