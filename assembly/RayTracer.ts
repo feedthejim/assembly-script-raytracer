@@ -43,7 +43,7 @@ export class RayTracer {
     }
 
     if (!sphere) {
-      return backgroundColor;
+      return backgroundColor.clone();
     }
 
     let surfaceColor = new Vector3();
@@ -148,17 +148,13 @@ export class RayTracer {
           elements,
           backgroundColor,
         );
-
-        pixelColor.x = min(1, pixelColor.x);
-        pixelColor.y = min(1, pixelColor.y);
-        pixelColor.z = min(1, pixelColor.z);
-
         // convert pixel to bytes
-        let r = <u8>nearest(pixelColor.x * 255);
-        let g = <u8>nearest(pixelColor.y * 255);
-        let b = <u8>nearest(pixelColor.z * 255);
+        let r = <u8>nearest(min(1, pixelColor.x) * 255);
+        let g = <u8>nearest(min(1, pixelColor.y) * 255);
+        let b = <u8>nearest(min(1, pixelColor.z) * 255);
         setPixel(x, y, r, g, b);
         free_memory(changetype<usize>(rayDir));
+        free_memory(changetype<usize>(pixelColor));
       }
     }
     free_memory(changetype<usize>(rayOrigin));
